@@ -1,4 +1,3 @@
-
 let Battery = function () {
     this.setEnergy = function (energy) {
         this.energy = energy;
@@ -23,9 +22,9 @@ let flashLamp = function () {
 
     this.light = function () {
         if (this.status) {
-           // alert("Lighting");
+            //    alert("Lighting");
         } else {
-          //  alert("Not lighting");
+            //  alert("Not lighting");
         }
     };
 
@@ -39,22 +38,29 @@ let flashLamp = function () {
 }
 
 function flashlamp() {
-    let density = document.getElementById('energy').value;
+    let energyInput = document.getElementById('energy').value;
     let battery = new Battery();
-    battery.setEnergy(density);
+    battery.setEnergy(energyInput);
     let flash = new flashLamp();
     flash.setBattery(battery);
-    for(let i=density;i>0;i--)
-    {
-        document.getElementById('lamp').innerHTML='Turn on <br/>';
+    console.log(flash);
+    let countEnergy = energyInput;
+    let count=setInterval(function () {
+        document.getElementById('lamp').innerHTML = 'Turn on <br/>';
         flash.turnOn();
         flash.light();
-            document.getElementById('battery').innerHTML=i;
-            setTimeout(1000);
+        document.getElementById('battery').innerHTML = countEnergy;
         battery.decreaseEnergy();
+        countEnergy--;
+        if(countEnergy<0)
+        {
+            document.getElementById('lamp').innerHTML = 'Turn off <br/>'
+            flash.turnOff();
+            flash.light();
+            clearInterval(count);
 
-    }
-        document.getElementById('lamp').innerHTML='Turn off <br/>'
-        flash.turnOff();
-        flash.light();
+        }
+    },1000);
+
+    //
 }
